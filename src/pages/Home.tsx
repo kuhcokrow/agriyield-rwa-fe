@@ -1,6 +1,7 @@
 import { useAccount } from 'wagmi'
 import { Link } from 'react-router-dom'
 import { Zap, ShieldCheck, Layers, BookOpen, Terminal } from 'lucide-react'
+import CopyCode from '../components/ui/CopyCode'
 
 export function Home() {
   const { address, isConnected } = useAccount()
@@ -57,8 +58,7 @@ export function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <div>
               <p className="text-gray-600 mb-4">Clone the repo, install dependencies and start the dev server.</p>
-              <pre className="bg-gray-100 p-3 rounded text-sm font-mono text-gray-800 overflow-auto">pnpm install 
-                pnpm dev</pre>
+              <CopyCode commands={["git clone https://github.com/zxkhai/web3-starter-fe.git","pnpm install","pnpm dev"]} />
             </div>
 
             <div>

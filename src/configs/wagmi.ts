@@ -1,9 +1,18 @@
-import { getDefaultConfig } from '@rainbow-me/rainbowkit'
+import { createConfig, http } from 'wagmi'
 import { chains } from './chains'
+import { injected, walletConnect } from 'wagmi/connectors'
 
-export const config = getDefaultConfig({
-  appName: 'Web3 Frontend Starter',
-  projectId: 'YOUR_PROJECT_ID', // Replace with your WalletConnect project ID
+export const config = createConfig({
   chains,
-  ssr: false,
+  connectors: [
+    injected(),
+    walletConnect({ projectId: 'YOUR_PROJECT_ID' }),
+  ],
+  transports: {
+    [chains[0].id]: http(),
+    [chains[1].id]: http(),
+    [chains[2].id]: http(),
+    [chains[3].id]: http(),
+    [chains[4].id]: http(),
+  },
 })

@@ -1,5 +1,5 @@
-import { mainnet, polygon, optimism, arbitrum, base } from 'wagmi/chains'
+import { sepolia, polygonMumbai, optimismSepolia, arbitrumSepolia, baseSepolia } from 'wagmi/chains'
 
-export const chains = [mainnet, polygon, optimism, arbitrum, base] as const
+export const chains = [sepolia, polygonMumbai, optimismSepolia, arbitrumSepolia, baseSepolia] as const
 
 export type SupportedChainId = (typeof chains)[number]['id']

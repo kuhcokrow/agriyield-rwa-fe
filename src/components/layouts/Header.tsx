@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Layers, Home, FileText, List } from 'lucide-react'
+import { useWallet } from '../../hooks/useWallet'
 
 export function Header() {
   const [open, setOpen] = useState(false)
+  const { isConnected } = useWallet()
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
@@ -34,9 +36,11 @@ export function Header() {
             <NavLink to="/examples" className={linkClass} onClick={() => setOpen(false)}>
               <List className="mr-2 w-4 h-4" /> Examples
             </NavLink>
-            <NavLink to="/dashboard" className={linkClass} onClick={() => setOpen(false)}>
-              <List className="mr-2 w-4 h-4" /> Dashboard
-            </NavLink>
+            {isConnected && (
+              <NavLink to="/dashboard" className={linkClass} onClick={() => setOpen(false)}>
+                <List className="mr-2 w-4 h-4" /> Dashboard
+              </NavLink>
+            )}
           </nav>
 
           <div className="flex items-center gap-4">
@@ -72,9 +76,11 @@ export function Header() {
             <NavLink to="/examples" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 border-b-2 border-blue-600' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
               <div className="flex items-center"><List className="mr-2 w-4 h-4" /> Examples</div>
             </NavLink>
-            <NavLink to="/dashboard" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 border-b-2 border-blue-600' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
-              <div className="flex items-center"><List className="mr-2 w-4 h-4" /> Dashboard</div>
-            </NavLink>
+            {isConnected && (
+              <NavLink to="/dashboard" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 border-b-2 border-blue-600' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
+                <div className="flex items-center"><List className="mr-2 w-4 h-4" /> Dashboard</div>
+              </NavLink>
+            )}
 
             <div className="pt-2">
               <ConnectButton showBalance={false} accountStatus="address" chainStatus="icon" />

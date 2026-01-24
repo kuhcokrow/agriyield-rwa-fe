@@ -3,25 +3,10 @@ import { formatEther } from 'viem'
 import { chains } from '../configs/chains'
 
 export function Dashboard() {
-  const { address, isConnected, chainId } = useAccount()
+  const { address, chainId } = useAccount()
   const { data: balance } = useBalance({
     address,
   })
-
-  if (!isConnected) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            Dashboard
-          </h1>
-          <p className="text-gray-600">
-            Please connect your wallet to view your dashboard
-          </p>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

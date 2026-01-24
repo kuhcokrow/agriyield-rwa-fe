@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Layers, Home, FileText, List } from 'lucide-react'
@@ -6,15 +6,23 @@ import { useWallet } from '../../hooks/useWallet'
 
 export function Header() {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const { isConnected } = useWallet()
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
-      ? 'flex items-center text-blue-600 px-3 py-2 text-sm font-medium border-b-2 border-blue-600'
-      : 'flex items-center text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition transform hover:-translate-y-0.5'
+      ? 'flex items-center text-blue-600 px-3 py-2 text-sm font-medium bg-blue-50 rounded-md'
+      : 'flex items-center text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition transform hover:-translate-y-0.5 hover:bg-gray-50'
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <header className="bg-white shadow-sm border-b">
+    <header className={`sticky top-0 left-0 right-0 z-60 transition-all duration-200 glass border-b border-white/20 ${scrolled ? 'backdrop-blur-md bg-white/70 shadow-md' : 'backdrop-blur bg-white/40'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-4">
@@ -65,19 +73,19 @@ export function Header() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden border-t bg-white">
+        <div className="md:hidden border-t border-white/20 glass">
           <div className="px-4 pt-4 pb-4 space-y-1">
-            <NavLink to="/" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 border-b-2 border-blue-600' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
+            <NavLink to="/" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 bg-blue-50 rounded-md' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
               <div className="flex items-center"><Home className="mr-2 w-4 h-4" /> Home</div>
             </NavLink>
-            <NavLink to="/docs" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 border-b-2 border-blue-600' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
+            <NavLink to="/docs" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 bg-blue-50 rounded-md' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
               <div className="flex items-center"><FileText className="mr-2 w-4 h-4" /> Docs</div>
             </NavLink>
-            <NavLink to="/examples" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 border-b-2 border-blue-600' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
+            <NavLink to="/examples" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 bg-blue-50 rounded-md' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
               <div className="flex items-center"><List className="mr-2 w-4 h-4" /> Examples</div>
             </NavLink>
             {isConnected && (
-              <NavLink to="/dashboard" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 border-b-2 border-blue-600' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
+              <NavLink to="/dashboard" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 bg-blue-50 rounded-md' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
                 <div className="flex items-center"><List className="mr-2 w-4 h-4" /> Dashboard</div>
               </NavLink>
             )}

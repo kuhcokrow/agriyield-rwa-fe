@@ -29,7 +29,7 @@ export function CopyCode({ commands }: CopyCodeProps) {
   }
 
   return (
-    <div className="bg-gray-50 rounded-md overflow-hidden">
+    <div className="glass overflow-hidden">
       <div className="p-4 font-mono text-sm text-gray-800 space-y-2 max-w-full overflow-x-auto">
         {commands.map((c, i) => (
           <div key={i} className="whitespace-pre-wrap break-words">{c}</div>

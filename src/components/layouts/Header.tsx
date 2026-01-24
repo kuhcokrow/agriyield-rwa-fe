@@ -8,7 +8,7 @@ export function Header() {
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
-      ? 'flex items-center text-white bg-blue-600 px-3 py-2 rounded-md text-sm font-medium transition transform'
+      ? 'flex items-center text-blue-600 px-3 py-2 text-sm font-medium border-b-2 border-blue-600'
       : 'flex items-center text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition transform hover:-translate-y-0.5'
 
   return (
@@ -63,16 +63,16 @@ export function Header() {
       {open && (
         <div className="md:hidden border-t bg-white">
           <div className="px-4 pt-4 pb-4 space-y-1">
-            <NavLink to="/" className={({ isActive }) => (isActive ? 'block px-3 py-2 rounded-md bg-blue-600 text-white' : 'block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
+            <NavLink to="/" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 border-b-2 border-blue-600' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
               <div className="flex items-center"><Home className="mr-2 w-4 h-4" /> Home</div>
             </NavLink>
-            <NavLink to="/docs" className={({ isActive }) => (isActive ? 'block px-3 py-2 rounded-md bg-blue-600 text-white' : 'block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
+            <NavLink to="/docs" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 border-b-2 border-blue-600' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
               <div className="flex items-center"><FileText className="mr-2 w-4 h-4" /> Docs</div>
             </NavLink>
-            <NavLink to="/examples" className={({ isActive }) => (isActive ? 'block px-3 py-2 rounded-md bg-blue-600 text-white' : 'block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
+            <NavLink to="/examples" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 border-b-2 border-blue-600' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
               <div className="flex items-center"><List className="mr-2 w-4 h-4" /> Examples</div>
             </NavLink>
-            <NavLink to="/dashboard" className={({ isActive }) => (isActive ? 'block px-3 py-2 rounded-md bg-blue-600 text-white' : 'block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
+            <NavLink to="/dashboard" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 border-b-2 border-blue-600' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
               <div className="flex items-center"><List className="mr-2 w-4 h-4" /> Dashboard</div>
             </NavLink>
 

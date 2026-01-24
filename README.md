@@ -9,9 +9,20 @@ A modern starter template for building Web3 frontend applications using React, V
 - 🟦 **TypeScript** - Type-safe development
 - 🌈 **RainbowKit** - Beautiful wallet connection UI
 - 🔗 **Wagmi** - React hooks for Ethereum
-- 🎨 **Tailwind CSS** - Utility-first CSS framework (via clsx)
+- 🎨 **Tailwind CSS** - Utility-first CSS framework
 - 🛠️ **ESLint** - Code linting and formatting
 - 📱 **Responsive Design** - Mobile-first approach
+
+## Features Included
+
+✅ **Wallet Connection** - RainbowKit for easy wallet integration  
+✅ **Multi-chain Support** - Pre-configured for Mainnet, Polygon, Optimism, Arbitrum, Base  
+✅ **Responsive Layout** - Header, footer, and navigation components  
+✅ **Example Pages** - Home page with connection status, Dashboard with wallet info  
+✅ **Type Safety** - Full TypeScript support with custom types  
+✅ **Utility Functions** - Helper functions for address formatting, balance display  
+✅ **Contract Examples** - ERC20 ABI and contract address templates  
+✅ **Custom Hooks** - Reusable wallet and Web3 hooks  
 
 ## Getting Started
 

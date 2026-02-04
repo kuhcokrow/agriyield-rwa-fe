@@ -58,7 +58,7 @@ export function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <div>
               <p className="text-gray-600 mb-4">Clone the repo, install dependencies and start the dev server.</p>
-              <CopyCode commands={["git clone https://github.com/zxkhai/web3-starter-fe.git","pnpm install","pnpm dev"]} />
+              <CopyCode commands={["git clone https://github.com/kuhcokrow/web3-starter-fe.git","pnpm install","pnpm dev"]} />
             </div>
 
             <div>

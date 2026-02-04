@@ -13,7 +13,7 @@ export function Docs() {
         <div className="glass p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-2">Quick Start</h2>
           <p className="text-sm text-gray-600 mb-3">Clone, install dependencies, and run the dev server. Use the copy button to copy commands.</p>
-          <CopyCode commands={["git clone https://github.com/zxkhai/web3-starter-fe.git","pnpm install","pnpm dev"]} />
+          <CopyCode commands={["git clone https://github.com/kuhcokrow/web3-starter-fe.git","pnpm install","pnpm dev"]} />
         </div>
 
         <div className="glass-card p-6">

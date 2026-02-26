@@ -17,37 +17,37 @@
   --glass-bg-strong: rgba(255, 255, 255, 0.2);
   --glass-border-strong: rgba(255, 255, 255, 0.3);
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
+  --background: oklch(0.99 0.01 140);
+  --foreground: oklch(0.15 0.02 140);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
+  --card-foreground: oklch(0.15 0.02 140);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.21 0.006 285.885);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.15 0.02 140);
+  --primary: oklch(0.55 0.18 145);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.94 0.02 140);
+  --secondary-foreground: oklch(0.2 0.02 140);
+  --muted: oklch(0.94 0.02 140);
+  --muted-foreground: oklch(0.5 0.03 140);
+  --accent: oklch(0.88 0.05 145);
+  --accent-foreground: oklch(0.2 0.02 140);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
+  --border: oklch(0.92 0.02 140);
+  --input: oklch(0.92 0.02 140);
+  --ring: oklch(0.55 0.18 145);
   --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.21 0.006 285.885);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.705 0.015 286.067);
+  --chart-2: oklch(0.6 0.15 145);
+  --chart-3: oklch(0.5 0.12 160);
+  --chart-4: oklch(0.7 0.18 130);
+  --chart-5: oklch(0.65 0.15 150);
+  --sidebar: oklch(0.99 0 0);
+  --sidebar-foreground: oklch(0.15 0.02 140);
+  --sidebar-primary: oklch(0.55 0.18 145);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.94 0.02 140);
+  --sidebar-accent-foreground: oklch(0.2 0.02 140);
+  --sidebar-border: oklch(0.92 0.02 140);
+  --sidebar-ring: oklch(0.55 0.18 145);
 }
 
 * {
@@ -57,7 +57,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
 }
 
 #root {
@@ -65,12 +65,12 @@ body {
 }
 
 a {
-  color: #646cff;
+  color: #16a34a;
   text-decoration: none;
 }
 
 a:hover {
-  color: #535bf2;
+  color: #15803d;
 }
 
 button {
@@ -86,7 +86,7 @@ button {
 }
 
 button:hover {
-  border-color: #646cff;
+  border-color: #16a34a;
 }
 
 /* Glassmorphism utilities */
@@ -122,7 +122,7 @@ button:focus-visible {
 /* Custom thin scrollbar to match UI (works in WebKit/Blink and Firefox) */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(37,99,235,0.9) transparent;
+  scrollbar-color: rgba(22,163,74,0.9) transparent;
 }
 
 /* WebKit / Blink browsers */
@@ -136,14 +136,14 @@ button:focus-visible {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: rgba(37,99,235,0.9); /* blue-600 */
+  background-color: rgba(22,163,74,0.9); /* green-600 */
   border-radius: 9999px;
   border: 2px solid transparent; /* creates padding around thumb */
   background-clip: padding-box;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(37,99,235,1);
+  background-color: rgba(22,163,74,1);
 }
 
 /* Smaller scrollbar for specific scrollable containers (optional) */

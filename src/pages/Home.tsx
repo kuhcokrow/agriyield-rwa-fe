@@ -30,7 +30,7 @@ export function Home() {
                 <span className="font-medium">Open Dashboard</span>
               </Link>
             ) : (
-              <div className="inline-flex items-center gap-2 bg-blue-50 border-2 border-blue-200 text-blue-700 px-6 py-3 rounded-lg">
+              <div className="inline-flex items-center gap-2 bg-green-50 border-2 border-green-200 text-green-700 px-6 py-3 rounded-lg">
                 <Wallet className="w-5 h-5" />
                 <span className="font-medium">Connect Wallet to Start</span>
               </div>
@@ -59,7 +59,7 @@ export function Home() {
             </article>
 
             <article className="glass-card p-8 text-center hover:shadow-xl transition-shadow">
-              <div className="inline-flex p-4 rounded-full bg-blue-100 text-blue-600 mb-4">
+              <div className="inline-flex p-4 rounded-full bg-emerald-100 text-emerald-600 mb-4">
                 <Sprout className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">2. Receive Yield Notes</h3>
@@ -69,7 +69,7 @@ export function Home() {
             </article>
 
             <article className="glass-card p-8 text-center hover:shadow-xl transition-shadow">
-              <div className="inline-flex p-4 rounded-full bg-indigo-100 text-indigo-600 mb-4">
+              <div className="inline-flex p-4 rounded-full bg-amber-100 text-amber-600 mb-4">
                 <TrendingUp className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">3. Earn Returns</h3>
@@ -98,7 +98,7 @@ export function Home() {
 
             <div className="flex gap-4">
               <div className="shrink-0">
-                <div className="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center">
                   <Sprout className="w-6 h-6" />
                 </div>
               </div>
@@ -110,7 +110,7 @@ export function Home() {
 
             <div className="flex gap-4">
               <div className="shrink-0">
-                <div className="w-12 h-12 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
                   <TrendingUp className="w-6 h-6" />
                 </div>
               </div>
@@ -157,10 +157,10 @@ export function Home() {
                 </Link>
               </div>
             ) : (
-              <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-6">
-                <Wallet className="w-12 h-12 text-blue-600 mx-auto mb-3" />
-                <p className="text-blue-800 font-medium mb-2">Connect Your Wallet</p>
-                <p className="text-sm text-blue-600">
+              <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6">
+                <Wallet className="w-12 h-12 text-green-600 mx-auto mb-3" />
+                <p className="text-green-800 font-medium mb-2">Connect Your Wallet</p>
+                <p className="text-sm text-green-600">
                   Click the "Connect Wallet" button in the top right corner to get started.
                 </p>
               </div>

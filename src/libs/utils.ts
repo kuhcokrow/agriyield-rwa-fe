@@ -1,8 +1,9 @@
 import { type ClassValue, clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
-// Utility for combining class names
+// Utility for combining class names with Tailwind CSS conflict resolution
 export function cn(...inputs: ClassValue[]) {
-  return clsx(inputs)
+  return twMerge(clsx(inputs))
 }
 
 // Format address for display

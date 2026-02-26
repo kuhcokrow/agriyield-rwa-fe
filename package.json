@@ -1,8 +1,8 @@
 {
-  "name": "web3-frontend-starter",
+  "name": "agriyield-rwa",
   "private": false,
-  "version": "0.1.0",
-  "description": "A starter template for Web3 frontend applications using React, Vite, TypeScript, and Wagmi",
+  "version": "1.0.0",
+  "description": "AgriYield RWA Platform - Tokenizing Agricultural Assets for Sustainable Investment",
   "type": "module",
   "scripts": {
     "dev": "vite",

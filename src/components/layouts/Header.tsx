@@ -27,10 +27,13 @@ export function Header() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-md bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white">
+              <div className="w-10 h-10 rounded-md bg-linear-to-br from-green-600 to-emerald-700 flex items-center justify-center text-white">
                 <Layers className="w-5 h-5" />
               </div>
-              <h1 className="text-lg font-semibold text-gray-900">Web3 Starter</h1>
+              <div>
+                <h1 className="text-lg font-bold text-gray-900">AgriYield</h1>
+                <p className="text-[10px] text-gray-500 -mt-1">RWA Platform</p>
+              </div>
             </div>
           </div>
 

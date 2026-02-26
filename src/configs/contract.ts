@@ -1,74 +1,29 @@
-export const DUMMY_LOAN_CONTRACT_ADDRESS = '0x000000000000000000000000000000000000dEaD'
+import { kycRegistryAbi } from '../abis/kycRegistry'
+import { yieldNoteNFTAbi } from '../abis/yieldNoteNFT'
+import { agriVaultAbi } from '../abis/agriVault'
+import { 
+  KYC_REGISTRY_ADDRESS, 
+  YIELD_NOTE_NFT_ADDRESS, 
+  AGRI_VAULT_ADDRESS 
+} from './addresses'
 
-export const DUMMY_LOAN_CONTRACT_ABI = [
-  {
-    inputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
-    name: 'applyLoan',
-    outputs: [{ internalType: 'uint256', name: 'loanId', type: 'uint256' }],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'uint256', name: 'loanId', type: 'uint256' }],
-    name: 'repayLoan',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'uint256', name: 'loanId', type: 'uint256' }],
-    name: 'getLoan',
-    outputs: [
-      {
-        components: [
-          { internalType: 'address', name: 'borrower', type: 'address' },
-          { internalType: 'uint256', name: 'amount', type: 'uint256' },
-          { internalType: 'uint256', name: 'repaid', type: 'uint256' },
-          { internalType: 'bool', name: 'active', type: 'bool' },
-        ],
-        internalType: 'struct Loan',
-        name: '',
-        type: 'tuple',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: true, internalType: 'address', name: 'borrower', type: 'address' },
-      { indexed: false, internalType: 'uint256', name: 'loanId', type: 'uint256' },
-      { indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' },
-    ],
-    name: 'LoanApplied',
-    type: 'event',
-  },
-]
+export { KYC_REGISTRY_ADDRESS, YIELD_NOTE_NFT_ADDRESS, AGRI_VAULT_ADDRESS }
 
-export type Loan = {
-  borrower: string
-  amount: string
-  repaid: string
-  active: boolean
+export const KYC_REGISTRY_ABI = kycRegistryAbi
+export const YIELD_NOTE_NFT_ABI = yieldNoteNFTAbi
+export const AGRI_VAULT_ABI = agriVaultAbi
+
+export const kycRegistryConfig = {
+  address: KYC_REGISTRY_ADDRESS,
+  abi: KYC_REGISTRY_ABI,
 }
 
-export const CONTRACT_ADDRESSES: Record<number, string> = {
-  // Example chain mappings — replace with deployed addresses per chainId
-  1: DUMMY_LOAN_CONTRACT_ADDRESS, // mainnet
-  5: DUMMY_LOAN_CONTRACT_ADDRESS, // goerli / sepolia
-  31337: DUMMY_LOAN_CONTRACT_ADDRESS, // local
+export const yieldNoteNftConfig = {
+  address: YIELD_NOTE_NFT_ADDRESS,
+  abi: YIELD_NOTE_NFT_ABI,
 }
 
-export const getDummyContractConfig = (chainId?: number) => {
-  const address = chainId ? CONTRACT_ADDRESSES[chainId] ?? DUMMY_LOAN_CONTRACT_ADDRESS : DUMMY_LOAN_CONTRACT_ADDRESS
-  return {
-    address,
-    abi: DUMMY_LOAN_CONTRACT_ABI,
-  }
-}
-
-export default {
-  address: DUMMY_LOAN_CONTRACT_ADDRESS,
-  abi: DUMMY_LOAN_CONTRACT_ABI,
+export const agriVaultConfig = {
+  address: AGRI_VAULT_ADDRESS,
+  abi: AGRI_VAULT_ABI,
 }

@@ -26,3 +26,11 @@ export interface BaseComponentProps {
   className?: string
   children?: React.ReactNode
 }
+
+export type YieldNote = {
+  principal: bigint
+  yieldRate: bigint
+  startDate: bigint
+  maturityDate: bigint
+  settled: boolean
+}

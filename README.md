@@ -1,49 +1,55 @@
-# Web3 Frontend Starter
+# AgriYield RWA
 
-A modern starter template for building Web3 frontend applications using React, Vite, TypeScript, and Wagmi.
+A decentralized platform for investing in agricultural yield notes secured by blockchain technology. Built with React, Vite, TypeScript, Wagmi, and RainbowKit.
 
-## Features
+## 🌾 About
 
-- ⚡ **Vite** - Fast build tool and dev server
+AgriYield RWA (Real-World Assets) tokenizes agricultural investments as NFTs, providing transparent and secure access to agricultural yield opportunities. Each yield note represents a fixed-term investment with predetermined returns backed by real agricultural projects.
+
+## ✨ Key Features
+
+### Platform Features
+- 🛡️ **KYC-Protected Access** - Only verified investors can participate
+- 🎨 **NFT-Based Yield Notes** - Investments represented as transferable NFTs
+- 📊 **Transparent Records** - All transactions recorded on-chain
+- ⚡ **Automated Settlement** - Smart contracts handle payouts at maturity
+- 👥 **Admin Dashboard** - Comprehensive management interface
+
+### Technical Features
+- ⚡ **Vite** - Lightning fast build tool and dev server
 - ⚛️ **React 19** - Latest React with modern features
-- 🟦 **TypeScript** - Type-safe development
+- 🟦 **TypeScript** - Full type safety
 - 🌈 **RainbowKit** - Beautiful wallet connection UI
 - 🔗 **Wagmi** - React hooks for Ethereum
-- 🎨 **Tailwind CSS** - Utility-first CSS framework
-- 🛠️ **ESLint** - Code linting and formatting
-- 📱 **Responsive Design** - Mobile-first approach
+- 🎨 **Tailwind CSS** - Modern, responsive design
 
-## Features Included
+## 🏗️ Smart Contracts
 
-✅ **Wallet Connection** - RainbowKit for easy wallet integration  
-✅ **Multi-chain Support** - Pre-configured for Mainnet, Polygon, Optimism, Arbitrum, Base  
-✅ **Responsive Layout** - Header, footer, and navigation components  
-✅ **Example Pages** - Home page with connection status, Dashboard with wallet info  
-✅ **Type Safety** - Full TypeScript support with custom types  
-✅ **Utility Functions** - Helper functions for address formatting, balance display  
-✅ **Contract Examples** - ERC20 ABI and contract address templates  
-✅ **Custom Hooks** - Reusable wallet and Web3 hooks  
+The platform consists of three main smart contracts:
 
-## Getting Started
+1. **KYCRegistry** - Manages investor whitelist and compliance
+2. **YieldNoteNFT** - NFT representing agricultural yield notes
+3. **AgriVault** - Handles deposits and settlement of yield notes
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js 18+
 - pnpm (recommended) or npm/yarn
+- MetaMask or compatible Web3 wallet
 
 ### Installation
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/web3-frontend-starter.git
-cd web3-frontend-starter
+git clone https://github.com/yourusername/agriyield-rwa.git
+cd agriyield-rwa
 ```
 
 2. Install dependencies:
 ```bash
 pnpm install
-# or
-npm install
 ```
 
 3. Start the development server:
@@ -55,50 +61,143 @@ npm run dev
 
 4. Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 src/
+├── abis/            # Smart contract ABIs
+│   ├── kycRegistry.ts
+│   ├── yieldNoteNFT.ts
+│   └── agriVault.ts
 ├── components/
 │   ├── layouts/     # Layout components (Header, Footer, Layout)
-│   └── ui/          # Reusable UI components
+│   ├── ui/          # Reusable UI components
+│   └── ProtectedRoute.tsx
 ├── configs/
 │   ├── chains.ts    # Blockchain network configurations
 │   ├── wagmi.ts     # Wagmi configuration
-│   └── contracts/   # Smart contract ABIs and addresses
-├── hooks/           # Custom React hooks
-├── libs/            # Utility libraries
-├── pages/           # Page components
+│   ├── contract.ts  # Contract configurations
+│   └── addresses.ts # Contract addresses
+├── hooks/
+│   ├── useKYC.ts    # KYC management hooks
+│   ├── useContracts.ts # Contract interaction hooks
+│   └── useWallet.ts # Wallet connection hooks
+├── pages/
+│   ├── Home.tsx     # Landing page
+│   ├── Dashboard.tsx # Admin dashboard
+│   └── ...
 └── types/           # TypeScript type definitions
 ```
 
-## Configuration
+## 🎯 Usage Guide
 
-### Wallet Configuration
+### For Investors
 
-Update `src/configs/wagmi.ts` to configure supported wallets and networks.
+1. **Connect Wallet** - Click "Connect Wallet" in the header
+2. **Complete KYC** - Contact platform admin to get KYC approval
+3. **View Dashboard** - Access your yield notes and investment status
+4. **Track Returns** - Monitor your investments until maturity
 
-### Chain Configuration
+### For Administrators
 
-Modify `src/configs/chains.ts` to add or remove supported blockchain networks.
+The Dashboard provides comprehensive admin tools when connected as contract owner:
+
+#### KYC Management
+- **Approve KYC** - Whitelist investor addresses
+- **Revoke KYC** - Remove investor access
+- **Check Status** - Verify KYC status of any address
+- **Platform Stats** - View total yield notes, holdings, and platform status
+
+#### Admin Features
+1. Navigate to Dashboard after connecting as admin
+2. View Platform Overview statistics
+3. Use KYC Management section to:
+   - Enter investor address
+   - Approve or revoke KYC status
+   - Check compliance status
+4. Monitor transaction confirmations
+5. View all contract addresses
+
+## ⚙️ Configuration
+
+### Contract Addresses
+
+Update contract addresses in `src/configs/addresses.ts`:
+
+```typescript
+export const KYC_REGISTRY_ADDRESS = '0x...' as const
+export const YIELD_NOTE_NFT_ADDRESS = '0x...' as const
+export const AGRI_VAULT_ADDRESS = '0x...' as const
+```
+
+### Supported Networks
+
+Configure blockchain networks in `src/configs/chains.ts`. Currently supports:
+- Ethereum Mainnet
+- Polygon
+- Optimism
+- Arbitrum
+- Base
 
 ### Smart Contracts
 
-Add your smart contract ABIs and addresses in `src/configs/contracts/`.
+The platform uses three main contracts:
 
-## Building for Production
+1. **KYCRegistry** (`src/abis/kycRegistry.ts`)
+   - Manages investor whitelist
+   - Owner-controlled approval/revocation
+   
+2. **YieldNoteNFT** (`src/abis/yieldNoteNFT.ts`)
+   - ERC721 tokens representing yield notes
+   - KYC-gated transfers
+   - Tracks principal, yield rate, and maturity
+   
+3. **AgriVault** (`src/abis/agriVault.ts`)
+   - Handles deposits and settlements
+   - Automated payout at maturity
+
+## 🏗️ Building for Production
 
 ```bash
 pnpm build
-# or
-npm run build
 ```
 
-## Deployment
+The built files will be in the `dist/` directory.
 
-This project is configured for deployment on Vercel, but can be deployed to any static hosting service.
+## 🚀 Deployment
 
-## Contributing
+This project is configured for deployment on Vercel:
+
+1. Push your code to GitHub
+2. Import project in Vercel
+3. Deploy automatically on push
+
+Can also be deployed to:
+- Netlify
+- Cloudflare Pages
+- Any static hosting service
+
+## 🔒 Security Considerations
+
+- All investor transactions require KYC verification
+- Smart contracts use OpenZeppelin security standards
+- ReentrancyGuard protects against re-entrancy attacks
+- Only contract owners can mint yield notes and settle investments
+- NFT transfers are KYC-gated to prevent unauthorized trading
+
+## 🛠️ Technology Stack
+
+- **Frontend**: React 19, TypeScript, Tailwind CSS
+- **Build Tool**: Vite
+- **Web3**: Wagmi, Viem, RainbowKit
+- **Smart Contracts**: Solidity 0.8.30, OpenZeppelin
+- **Deployment**: Vercel
+
+## 📝 License
+
+MIT License - feel free to use this project for your own RWA platform.
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)

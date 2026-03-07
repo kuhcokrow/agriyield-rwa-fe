@@ -1,6 +1,6 @@
 import { useAccount } from 'wagmi'
 import { Link } from 'react-router-dom'
-import { Sprout, ShieldCheck, TrendingUp, Wallet, LayoutDashboard } from 'lucide-react'
+import { Sprout, ShieldCheck, TrendingUp, Wallet, LayoutDashboard, BookOpen } from 'lucide-react'
 import { Button } from '../components/ui/button'
 
 export function Home() {

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useAccount } from 'wagmi'
 import { isAddress } from 'viem'
 import { Shield, Settings, CheckCircle, XCircle, AlertCircle } from 'lucide-react'
+import { Button } from '../components/ui/button'
 import { useKYCOwner, useApproveKYC, useRevokeKYC, useIsKYCed } from '../hooks/useKYC'
 import { KYC_REGISTRY_ADDRESS } from '../configs/contract'
 
@@ -144,18 +145,15 @@ export function Dashboard() {
               const Icon = item.icon
               const isActive = activeMenu === item.id
               return (
-                <button
+                <Button
                   key={item.id}
                   onClick={() => setActiveMenu(item.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors ${
-                    isActive
-                      ? 'bg-green-50 text-green-700 font-medium'
-                      : 'text-gray-600 hover:bg-gray-50'
-                  }`}
+                  variant={isActive ? 'default' : 'ghost'}
+                  className={`w-full justify-start gap-3 ${isActive ? '' : ''}`}
                 >
                   <Icon className="w-5 h-5" />
                   <span>{item.label}</span>
-                </button>
+                </Button>
               )
             })}
           </nav>
@@ -314,15 +312,15 @@ export function Dashboard() {
                         setTargetAddress(e.target.value)
                         setValidationError('')
                       }}
-                      className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+                      className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent font-mono text-sm"
                     />
-                    <button
+                    <Button
                       onClick={handleCheckStatus}
                       disabled={!targetAddress || isCheckingStatus}
-                      className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors"
+                      variant="secondary"
                     >
                       {isCheckingStatus ? 'Checking...' : 'Check Status'}
-                    </button>
+                    </Button>
                   </div>
 
                   {checkAddress && isAddress(checkAddress) && (

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { Layers, Home, FileText, List, Shield, LayoutDashboard } from 'lucide-react'
+import { Layers, Home, Shield, LayoutDashboard } from 'lucide-react'
 import { useWallet } from '../../hooks/useWallet'
 
 export function Header() {
@@ -51,12 +51,6 @@ export function Header() {
                 </NavLink>
               </>
             )}
-            <NavLink to="/docs" className={linkClass} onClick={() => setOpen(false)}>
-              <FileText className="mr-2 w-4 h-4" /> Docs
-            </NavLink>
-            <NavLink to="/examples" className={linkClass} onClick={() => setOpen(false)}>
-              <List className="mr-2 w-4 h-4" /> Examples
-            </NavLink>
           </nav>
 
           <div className="flex items-center gap-4">
@@ -96,12 +90,6 @@ export function Header() {
                 </NavLink>
               </>
             )}
-            <NavLink to="/docs" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 bg-blue-50 rounded-md' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
-              <div className="flex items-center"><FileText className="mr-2 w-4 h-4" /> Docs</div>
-            </NavLink>
-            <NavLink to="/examples" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 bg-blue-50 rounded-md' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
-              <div className="flex items-center"><List className="mr-2 w-4 h-4" /> Examples</div>
-            </NavLink>
 
             <div className="pt-2">
               <ConnectButton showBalance={false} accountStatus="address" chainStatus="icon" />

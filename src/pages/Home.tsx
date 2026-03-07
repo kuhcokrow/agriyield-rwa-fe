@@ -1,6 +1,7 @@
 import { useAccount } from 'wagmi'
 import { Link } from 'react-router-dom'
-import { Sprout, ShieldCheck, TrendingUp, BookOpen, LayoutDashboard, Wallet } from 'lucide-react'
+import { Sprout, ShieldCheck, TrendingUp, Wallet, LayoutDashboard, BookOpen } from 'lucide-react'
+import { Button } from '../components/ui/button'
 
 export function Home() {
   const { address, isConnected } = useAccount()
@@ -23,11 +24,13 @@ export function Home() {
             Earn predictable returns while supporting sustainable farming.
           </p>
 
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-4 flex-wrap">
             {isConnected ? (
-              <Link to="/dashboard" className="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-green-700 transition-colors" aria-label="Dashboard">
-                <LayoutDashboard className="w-5 h-5" />
-                <span className="font-medium">Open Dashboard</span>
+              <Link to="/dashboard">
+                <Button size="lg" className="gap-2">
+                  <LayoutDashboard className="w-5 h-5" />
+                  Open Dashboard
+                </Button>
               </Link>
             ) : (
               <div className="inline-flex items-center gap-2 bg-green-50 border-2 border-green-200 text-green-700 px-6 py-3 rounded-lg">
@@ -35,10 +38,6 @@ export function Home() {
                 <span className="font-medium">Connect Wallet to Start</span>
               </div>
             )}
-            <Link to="/docs" className="inline-flex items-center gap-2 border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors" aria-label="Docs">
-              <BookOpen className="w-5 h-5" />
-              <span className="font-medium">Learn More</span>
-            </Link>
           </div>
         </div>
       </header>
@@ -148,12 +147,11 @@ export function Home() {
                   <p className="text-green-800 font-medium">✓ Wallet Connected</p>
                   <p className="text-sm text-green-600 font-mono mt-1">{address}</p>
                 </div>
-                <Link 
-                  to="/dashboard" 
-                  className="inline-flex items-center gap-2 bg-green-600 text-white px-8 py-4 rounded-lg shadow-lg hover:bg-green-700 transition-colors font-medium text-lg"
-                >
-                  <LayoutDashboard className="w-5 h-5" />
-                  Go to Dashboard
+                <Link to="/dashboard">
+                  <Button size="lg" className="text-lg h-12 px-8">
+                    <LayoutDashboard className="w-5 h-5" />
+                    Go to Dashboard
+                  </Button>
                 </Link>
               </div>
             ) : (

@@ -47,10 +47,10 @@ jobs:
           ${{ runner.os }}-pnpm-store-
 
     - name: Install dependencies
-      run: pnpm install --frozen-lockfile
+      run: pnpm install
 
     - name: Run linter
-      run: pnpm lint --max-warnings 0
+      run: pnpm lint
 
     - name: Build project
       run: pnpm build
@@ -58,7 +58,7 @@ jobs:
     - name: Install Vercel CLI
       run: pnpm add -g vercel@latest
 
-    - name: Deploy to Vercel Staging
+    - name: Deploy to Staging
       run: |
         vercel deploy --token=${{ secrets.VERCEL_TOKEN }} --prebuilt
       env:

@@ -1,5 +1,5 @@
-export const ADMIN_WHITELIST = process.env.ADMIN_WHITELIST
-  ? process.env.ADMIN_WHITELIST.split(',').map((addr: string) => addr.trim())
+export const ADMIN_WHITELIST = import.meta.env.ADMIN_WHITELIST
+  ? import.meta.env.ADMIN_WHITELIST.split(',').map((addr: string) => addr.trim())
   : [] as string[]
 
 export const isAdminWhitelisted = (address?: string): boolean => {

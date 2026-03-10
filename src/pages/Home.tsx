@@ -27,7 +27,7 @@ export function Home() {
           <div className="flex items-center justify-center gap-4 flex-wrap">
             {isConnected ? (
               <Link to="/dashboard">
-                <Button size="lg" className="gap-2">
+                <Button size="lg" className="gap-2 bg-green-400">
                   <LayoutDashboard className="w-5 h-5" />
                   Open Dashboard
                 </Button>

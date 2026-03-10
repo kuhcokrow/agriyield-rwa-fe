@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { Layers, Home, Shield, LayoutDashboard } from 'lucide-react'
+import { Home, Shield, LayoutDashboard, Sprout } from 'lucide-react'
 import { useWallet } from '../../hooks/useWallet'
 
 export function Header() {
@@ -22,17 +22,16 @@ export function Header() {
   }, [])
 
   return (
-    <header className={`sticky top-0 left-0 right-0 z-60 transition-all duration-200 glass border-b border-white/20 ${scrolled ? 'backdrop-blur-md bg-white/70 shadow-md' : 'backdrop-blur bg-white/40'}`}>
+    <header className={`sticky top-0 left-0 right-0 z-60 transition-all duration-200 border-b border-gray-200/50 ${scrolled ? 'bg-white/90 shadow-md backdrop-blur-sm' : 'backdrop-blur'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-md bg-linear-to-br from-green-600 to-emerald-700 flex items-center justify-center text-white">
-                <Layers className="w-5 h-5" />
+                <Sprout className="w-5 h-5" />
               </div>
               <div>
-                <h1 className="text-lg font-bold text-gray-900">AgriYield</h1>
-                <p className="text-[10px] text-gray-500 -mt-1">RWA Platform</p>
+                <h1 className="text-lg font-bold text-gray-900">AgriYield RWA</h1>
               </div>
             </div>
           </div>

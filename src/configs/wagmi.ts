@@ -9,10 +9,6 @@ export const config = createConfig({
     walletConnect({ projectId: 'YOUR_PROJECT_ID' }),
   ],
   transports: {
-    [chains[0].id]: http(),
-    [chains[1].id]: http(),
-    [chains[2].id]: http(),
-    [chains[3].id]: http(),
-    [chains[4].id]: http(),
+    5003: http('https://rpc.sepolia.mantle.xyz'),
   },
 })

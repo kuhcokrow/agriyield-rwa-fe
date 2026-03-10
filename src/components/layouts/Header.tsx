@@ -56,7 +56,7 @@ export function Header() {
           <div className="flex items-center gap-4">
             <div className="hidden sm:block">
               <div className="transition-transform hover:scale-105">
-                <ConnectButton showBalance={false} accountStatus="address" chainStatus="icon" />
+                <ConnectButton showBalance={false} accountStatus="address" chainStatus="none" />
               </div>
             </div>
 
@@ -92,7 +92,7 @@ export function Header() {
             )}
 
             <div className="pt-2">
-              <ConnectButton showBalance={false} accountStatus="address" chainStatus="icon" />
+              <ConnectButton showBalance={false} accountStatus="address" chainStatus="none" />
             </div>
           </div>
         </div>

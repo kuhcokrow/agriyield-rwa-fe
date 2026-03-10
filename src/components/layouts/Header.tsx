@@ -3,11 +3,14 @@ import { NavLink } from 'react-router-dom'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Home, Shield, LayoutDashboard, Sprout } from 'lucide-react'
 import { useWallet } from '../../hooks/useWallet'
+import { useIsAdmin } from '../../hooks/useAdmin'
+
 
 export function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { isConnected } = useWallet()
+  const { isAdmin } = useIsAdmin()
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
@@ -45,9 +48,11 @@ export function Header() {
                 <NavLink to="/kyc-status" className={linkClass} onClick={() => setOpen(false)}>
                   <Shield className="mr-2 w-4 h-4" /> KYC Status
                 </NavLink>
-                <NavLink to="/dashboard" className={linkClass} onClick={() => setOpen(false)}>
-                  <LayoutDashboard className="mr-2 w-4 h-4" /> Admin
-                </NavLink>
+                {isAdmin && (
+                  <NavLink to="/dashboard" className={linkClass} onClick={() => setOpen(false)}>
+                    <LayoutDashboard className="mr-2 w-4 h-4" /> Admin
+                  </NavLink>
+                )}
               </>
             )}
           </nav>
@@ -84,9 +89,11 @@ export function Header() {
                 <NavLink to="/kyc-status" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 bg-blue-50 rounded-md' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
                   <div className="flex items-center"><Shield className="mr-2 w-4 h-4" /> KYC Status</div>
                 </NavLink>
-                <NavLink to="/dashboard" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 bg-blue-50 rounded-md' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
-                  <div className="flex items-center"><LayoutDashboard className="mr-2 w-4 h-4" /> Admin</div>
-                </NavLink>
+                {isAdmin && (
+                  <NavLink to="/dashboard" className={({ isActive }) => (isActive ? 'block px-3 py-2 text-blue-600 bg-blue-50 rounded-md' : 'block px-3 py-2 text-gray-700 hover:bg-gray-50')} onClick={() => setOpen(false)}>
+                    <div className="flex items-center"><LayoutDashboard className="mr-2 w-4 h-4" /> Admin</div>
+                  </NavLink>
+                )}
               </>
             )}
 

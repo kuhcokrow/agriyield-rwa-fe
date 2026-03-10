@@ -1,29 +1,33 @@
 import { useState, useEffect } from 'react'
 import { useAccount } from 'wagmi'
 import { isAddress } from 'viem'
-import { Shield, Settings, CheckCircle, XCircle, AlertCircle } from 'lucide-react'
+import { Shield, Settings, CheckCircle, XCircle, AlertCircle, Users } from 'lucide-react'
 import { Button } from '../components/ui/button'
 import { useKYCOwner, useApproveKYC, useRevokeKYC, useIsKYCed } from '../hooks/useKYC'
+import { useIsAdmin } from '../hooks/useAdmin'
 import { KYC_REGISTRY_ADDRESS } from '../configs/contract'
+import { ADMIN_WHITELIST } from '../configs/admin'
 
 type MenuItem = {
   id: string
   label: string
   icon: typeof Shield
+  ownership?: 'admin' | 'owner'
 }
 
 const menuItems: MenuItem[] = [
   { id: 'kyc', label: 'KYC Registry', icon: Shield },
+  { id: 'admin', label: 'Admin Management', icon: Users, ownership: 'owner' },
   { id: 'settings', label: 'Settings', icon: Settings },
 ]
 
 export function Dashboard() {
   const { address } = useAccount()
   const { owner: kycOwner, isLoading: isLoadingOwner } = useKYCOwner()
+  const { isAdmin, isOwner } = useIsAdmin()
   const [activeMenu, setActiveMenu] = useState('kyc')
-  
-  // Check if user is admin
-  const isAdmin = address && kycOwner && address.toLowerCase() === kycOwner.toLowerCase()
+  const [adminInput, setAdminInput] = useState('')
+  const [adminError, setAdminError] = useState('')
 
   // KYC Management State
   const [targetAddress, setTargetAddress] = useState('')
@@ -141,7 +145,13 @@ export function Dashboard() {
           </div>
 
           <nav className="space-y-2">
-            {menuItems.map((item) => {
+            {menuItems
+              .filter((item) => {
+                // Hide owner-only items from non-owners
+                if (item.ownership === 'owner' && !isOwner) return false
+                return true
+              })
+              .map((item) => {
               const Icon = item.icon
               const isActive = activeMenu === item.id
               return (
@@ -373,6 +383,85 @@ export function Dashboard() {
               <h1 className="text-3xl font-bold text-gray-900 mb-4">Settings</h1>
               <div className="glass-card p-6">
                 <p className="text-gray-600">Platform settings will be available here.</p>
+              </div>
+            </div>
+          )}
+
+          {activeMenu === 'admin' && isOwner && (
+            <div>
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-gray-900">Admin Management</h1>
+                <p className="text-gray-600 mt-2">Manage admin whitelist for the platform</p>
+              </div>
+
+              {/* Admin Whitelist */}
+              <div className="glass-card p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Current Admin Whitelist</h3>
+                
+                {ADMIN_WHITELIST.length === 0 ? (
+                  <p className="text-gray-600 mb-6">No additional admins whitelisted yet.</p>
+                ) : (
+                  <div className="mb-6 space-y-2">
+                    {ADMIN_WHITELIST.map((admin: string, idx: number) => (
+                      <div key={idx} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <p className="font-mono text-sm text-gray-900 break-all">{admin}</p>
+                        <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                          Admin
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div className="border-t border-gray-200 pt-6">
+                  <h4 className="font-semibold text-gray-900 mb-4">Add Admin to Whitelist</h4>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Add a wallet address to grant admin access. This list is hardcoded in config.
+                  </p>
+
+                  <div className="space-y-4">
+                    <div>
+                      <label htmlFor="admin-address" className="block text-sm font-medium text-gray-700 mb-2">
+                        Wallet Address
+                      </label>
+                      <input
+                        id="admin-address"
+                        type="text"
+                        placeholder="0x..."
+                        value={adminInput}
+                        onChange={(e) => {
+                          setAdminInput(e.target.value)
+                          setAdminError('')
+                        }}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent font-mono text-sm"
+                      />
+                      {adminError && (
+                        <p className="text-red-600 text-sm mt-2 flex items-center gap-2">
+                          <XCircle className="w-4 h-4" />
+                          {adminError}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                      <p className="text-sm text-blue-900 mb-3">
+                        <span className="font-semibold">How to add admin:</span>
+                      </p>
+                      <ol className="text-xs text-blue-800 space-y-2 list-decimal list-inside">
+                        <li>Copy the wallet address above</li>
+                        <li>Edit <code className="bg-blue-100 px-1.5 py-0.5 rounded font-mono">src/configs/admin.ts</code></li>
+                        <li>Add address to ADMIN_WHITELIST array</li>
+                        <li>Save and refresh the app</li>
+                      </ol>
+                    </div>
+
+                    <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
+                      <p className="text-sm text-green-900">
+                        <span className="font-semibold">✓ Example:</span> Add <code className="bg-green-100 px-1.5 py-0.5 rounded font-mono text-xs">'0xabc...'</code> to the ADMIN_WHITELIST array
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}

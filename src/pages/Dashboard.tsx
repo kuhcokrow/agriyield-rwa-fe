@@ -3,6 +3,7 @@ import { useAccount } from 'wagmi'
 import { isAddress } from 'viem'
 import { Shield, Settings, CheckCircle, XCircle, AlertCircle, Users } from 'lucide-react'
 import { Button } from '../components/ui/button'
+import { Spinner } from '../components/ui/spinner'
 import { useKYCOwner, useApproveKYC, useRevokeKYC, useIsKYCed } from '../hooks/useKYC'
 import { useIsAdmin } from '../hooks/useAdmin'
 import { KYC_REGISTRY_ADDRESS } from '../configs/contract'
@@ -96,8 +97,8 @@ export function Dashboard() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <Spinner className="size-12 mx-auto mb-4" />
+          <p className="text-gray-600">Loading...</p>
         </div>
       </div>
     )
@@ -245,8 +246,17 @@ export function Dashboard() {
                       disabled={approveKYC.isPending || approveKYC.isConfirming || !targetAddress}
                       className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors"
                     >
-                      <CheckCircle className="w-5 h-5" />
-                      {approveKYC.isPending || approveKYC.isConfirming ? 'Processing...' : 'Approve KYC'}
+                      {approveKYC.isPending || approveKYC.isConfirming ? (
+                        <>
+                          <Spinner className="size-5" />
+                          Processing...
+                        </>
+                      ) : (
+                        <>
+                          <CheckCircle className="w-5 h-5" />
+                          Approve KYC
+                        </>
+                      )}
                     </button>
                     
                     <button
@@ -254,8 +264,17 @@ export function Dashboard() {
                       disabled={revokeKYC.isPending || revokeKYC.isConfirming || !targetAddress}
                       className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors"
                     >
-                      <XCircle className="w-5 h-5" />
-                      {revokeKYC.isPending || revokeKYC.isConfirming ? 'Processing...' : 'Revoke KYC'}
+                      {revokeKYC.isPending || revokeKYC.isConfirming ? (
+                        <>
+                          <Spinner className="size-5" />
+                          Processing...
+                        </>
+                      ) : (
+                        <>
+                          <XCircle className="w-5 h-5" />
+                          Revoke KYC
+                        </>
+                      )}
                     </button>
                   </div>
 
@@ -328,8 +347,16 @@ export function Dashboard() {
                       onClick={handleCheckStatus}
                       disabled={!targetAddress || isCheckingStatus}
                       variant="secondary"
+                      className="flex items-center gap-2"
                     >
-                      {isCheckingStatus ? 'Checking...' : 'Check Status'}
+                      {isCheckingStatus ? (
+                        <>
+                          <Spinner className="size-4" />
+                          Checking...
+                        </>
+                      ) : (
+                        'Check Status'
+                      )}
                     </Button>
                   </div>
 

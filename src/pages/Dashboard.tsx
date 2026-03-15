@@ -69,16 +69,15 @@ export function Dashboard() {
   }
 
   const handleCheckStatus = () => {
-    if (!targetAddress) {
+    if (!checkAddress) {
       setValidationError('Please enter an address')
       return
     }
-    if (!isAddress(targetAddress)) {
+    if (!isAddress(checkAddress)) {
       setValidationError('Invalid Ethereum address')
       return
     }
     setValidationError('')
-    setCheckAddress(targetAddress)
   }
 
   // Clear form on success
@@ -336,9 +335,9 @@ export function Dashboard() {
                     <input
                       type="text"
                       placeholder="0x... (address to check)"
-                      value={targetAddress}
+                      value={checkAddress}
                       onChange={(e) => {
-                        setTargetAddress(e.target.value)
+                        setCheckAddress(e.target.value)
                         setValidationError('')
                       }}
                       className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent font-mono text-sm"

@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react'
+import { Toaster } from '../ui/sonner'
 import { Header } from './Header'
 import { Footer } from './Footer'
 
@@ -8,12 +9,15 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col glass-strong">
-      <Header />
-      <main className="flex-1 p-4">
-        {children}
-      </main>
-      <Footer />
-    </div>
+    <>
+      <div className="min-h-screen flex flex-col glass-strong">
+        <Header />
+        <main className="flex-1 p-4">
+          {children}
+        </main>
+        <Footer />
+      </div>
+      <Toaster/>
+    </>
   )
 }

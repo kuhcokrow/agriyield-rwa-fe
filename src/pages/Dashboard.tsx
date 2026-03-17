@@ -8,6 +8,7 @@ import { useIsAdmin } from '../hooks/useAdmin'
 import { KYC_REGISTRY_ADDRESS } from '../configs/contract'
 import { ADMIN_WHITELIST } from '../configs/admin'
 import { Spinner } from '@/components/ui/spinner'
+import { toastSuccess, toastError } from '../libs/toast'
 
 type MenuItem = {
   id: string
@@ -105,18 +106,44 @@ export function Dashboard() {
 
   // Clear form on success
   useEffect(() => {
-    if (approveKYC.isSuccess || revokeKYC.isSuccess) {
+    if (approveKYC.isSuccess) {
+      toastSuccess('KYC approved successfully!')
       const timer = setTimeout(() => {
         setTargetAddress('')
         setCheckAddress('')
       }, 2000)
       return () => clearTimeout(timer)
     }
-  }, [approveKYC.isSuccess, revokeKYC.isSuccess])
+  }, [approveKYC.isSuccess])
+
+  useEffect(() => {
+    if (revokeKYC.isSuccess) {
+      toastSuccess('KYC revoked successfully!')
+      const timer = setTimeout(() => {
+        setTargetAddress('')
+        setCheckAddress('')
+      }, 2000)
+      return () => clearTimeout(timer)
+    }
+  }, [revokeKYC.isSuccess])
+
+  // Handle errors
+  useEffect(() => {
+    if (approveKYC.error) {
+      toastError('Failed to approve KYC', approveKYC.error.message)
+    }
+  }, [approveKYC.error])
+
+  useEffect(() => {
+    if (revokeKYC.error) {
+      toastError('Failed to revoke KYC', revokeKYC.error.message)
+    }
+  }, [revokeKYC.error])
 
   // Handle transfer ownership success
   useEffect(() => {
     if (transferOwnershipHook.isSuccess) {
+      toastSuccess('Ownership transferred successfully!')
       const timer = setTimeout(() => {
         setTransferInput('')
         setTransferConfirm(false)
@@ -124,6 +151,13 @@ export function Dashboard() {
       return () => clearTimeout(timer)
     }
   }, [transferOwnershipHook.isSuccess])
+
+  // Handle transfer ownership error
+  useEffect(() => {
+    if (transferOwnershipHook.error) {
+      toastError('Failed to transfer ownership', transferOwnershipHook.error.message)
+    }
+  }, [transferOwnershipHook.error])
 
   // Loading owner
   if (isLoadingOwner) {
@@ -310,48 +344,6 @@ export function Dashboard() {
                       )}
                     </button>
                   </div>
-
-                  {/* Transaction Status */}
-                  {approveKYC.hash && (
-                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                      <p className="text-sm text-blue-900 font-medium mb-1">Approve Transaction Submitted</p>
-                      <p className="text-xs font-mono text-blue-700 break-all">{approveKYC.hash}</p>
-                    </div>
-                  )}
-                  
-                  {revokeKYC.hash && (
-                    <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
-                      <p className="text-sm text-orange-900 font-medium mb-1">Revoke Transaction Submitted</p>
-                      <p className="text-xs font-mono text-orange-700 break-all">{revokeKYC.hash}</p>
-                    </div>
-                  )}
-                  
-                  {approveKYC.isSuccess && (
-                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5 text-green-600" />
-                      <p className="text-sm text-green-900 font-medium">
-                        ✓ KYC approved successfully!
-                      </p>
-                    </div>
-                  )}
-                  
-                  {revokeKYC.isSuccess && (
-                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5 text-red-600" />
-                      <p className="text-sm text-red-900 font-medium">
-                        ✓ KYC revoked successfully!
-                      </p>
-                    </div>
-                  )}
-                  
-                  {(approveKYC.error || revokeKYC.error) && (
-                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                      <p className="text-sm text-red-900 font-medium mb-1">Transaction Error</p>
-                      <p className="text-xs text-red-700">
-                        {approveKYC.error?.message || revokeKYC.error?.message}
-                      </p>
-                    </div>
-                  )}
                 </div>
               </div>
 
@@ -615,32 +607,6 @@ export function Dashboard() {
                           Cancel
                         </button>
                       </div>
-                    </div>
-                  )}
-
-                  {transferOwnershipHook.hash && (
-                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                      <p className="text-sm text-blue-900 font-medium mb-1">Transfer Transaction Submitted</p>
-                      <p className="text-xs font-mono text-blue-700 break-all">{transferOwnershipHook.hash}</p>
-                    </div>
-                  )}
-
-                  {transferOwnershipHook.isSuccess && (
-                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5 text-green-600" />
-                      <div>
-                        <p className="text-sm text-green-900 font-medium">✓ Ownership transferred successfully!</p>
-                        <p className="text-xs text-green-700 mt-1">The contract is now owned by the new address.</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {transferOwnershipHook.error && (
-                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                      <p className="text-sm text-red-900 font-medium mb-1">Transaction Error</p>
-                      <p className="text-xs text-red-700">
-                        {transferOwnershipHook.error?.message}
-                      </p>
                     </div>
                   )}
                 </div>

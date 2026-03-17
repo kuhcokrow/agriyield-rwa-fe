@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useAccount } from 'wagmi'
 import { isAddress } from 'viem'
-import { Shield, Settings, CheckCircle, XCircle, AlertCircle, Users } from 'lucide-react'
+import { Shield, Settings, CheckCircle, XCircle, AlertCircle, Users, ArrowRight } from 'lucide-react'
 import { Button } from '../components/ui/button'
-import { Spinner } from '../components/ui/spinner'
-import { useKYCOwner, useApproveKYC, useRevokeKYC, useIsKYCed } from '../hooks/useKYC'
+import { useKYCOwner, useApproveKYC, useRevokeKYC, useIsKYCed, useTransferOwnership } from '../hooks/useKYC'
 import { useIsAdmin } from '../hooks/useAdmin'
 import { KYC_REGISTRY_ADDRESS } from '../configs/contract'
 import { ADMIN_WHITELIST } from '../configs/admin'
+import { Spinner } from '@/components/ui/spinner'
 
 type MenuItem = {
   id: string
@@ -29,6 +29,12 @@ export function Dashboard() {
   const [activeMenu, setActiveMenu] = useState('kyc')
   const [adminInput, setAdminInput] = useState('')
   const [adminError, setAdminError] = useState('')
+
+  // Transfer Ownership State
+  const [transferInput, setTransferInput] = useState('')
+  const [transferError, setTransferError] = useState('')
+  const [transferConfirm, setTransferConfirm] = useState(false)
+  const transferOwnershipHook = useTransferOwnership()
 
   // KYC Management State
   const [targetAddress, setTargetAddress] = useState('')
@@ -80,6 +86,23 @@ export function Dashboard() {
     setValidationError('')
   }
 
+  const handleTransferOwnership = () => {
+    if (!transferInput) {
+      setTransferError('Please enter an address')
+      return
+    }
+    if (!isAddress(transferInput)) {
+      setTransferError('Invalid Ethereum address')
+      return
+    }
+    if (transferInput.toLowerCase() === kycOwner?.toLowerCase()) {
+      setTransferError('New owner is same as current owner')
+      return
+    }
+    setTransferError('')
+    transferOwnershipHook.transferOwnership(transferInput as `0x${string}`)
+  }
+
   // Clear form on success
   useEffect(() => {
     if (approveKYC.isSuccess || revokeKYC.isSuccess) {
@@ -90,6 +113,17 @@ export function Dashboard() {
       return () => clearTimeout(timer)
     }
   }, [approveKYC.isSuccess, revokeKYC.isSuccess])
+
+  // Handle transfer ownership success
+  useEffect(() => {
+    if (transferOwnershipHook.isSuccess) {
+      const timer = setTimeout(() => {
+        setTransferInput('')
+        setTransferConfirm(false)
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [transferOwnershipHook.isSuccess])
 
   // Loading owner
   if (isLoadingOwner) {
@@ -489,6 +523,128 @@ export function Dashboard() {
                   </div>
                 </div>
               </div>
+
+              {/* Transfer Ownership */}
+              <div className="glass-card p-6 border-l-4 border-orange-500 mt-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <ArrowRight className="w-5 h-5 text-orange-600" />
+                  <h3 className="text-lg font-semibold text-gray-900">Transfer Ownership</h3>
+                </div>
+                
+                <div className="bg-orange-50 border border-orange-200 p-4 rounded-lg mb-6">
+                  <p className="text-sm text-orange-900 font-medium mb-2">⚠️ Be Careful!</p>
+                  <p className="text-xs text-orange-800">
+                    Transferring ownership will grant all admin permissions to the new owner. This action can be reversed by the new owner.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm text-gray-600 mb-2">Current Owner</label>
+                    <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                      <p className="font-mono text-sm text-gray-900 break-all">{kycOwner}</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="transfer-address" className="block text-sm font-medium text-gray-700 mb-2">
+                      New Owner Address
+                    </label>
+                    <input
+                      id="transfer-address"
+                      type="text"
+                      placeholder="0x..."
+                      value={transferInput}
+                      onChange={(e) => {
+                        setTransferInput(e.target.value)
+                        setTransferError('')
+                        setTransferConfirm(false)
+                      }}
+                      disabled={transferOwnershipHook.isPending || transferOwnershipHook.isConfirming}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent font-mono text-sm disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    />
+                    {transferError && (
+                      <p className="text-red-600 text-sm mt-2 flex items-center gap-2">
+                        <XCircle className="w-4 h-4" />
+                        {transferError}
+                      </p>
+                    )}
+                  </div>
+
+                  {!transferConfirm ? (
+                    <button
+                      onClick={() => {
+                        if (transferInput && isAddress(transferInput)) {
+                          setTransferConfirm(true)
+                          setTransferError('')
+                        } else {
+                          setTransferError('Please enter a valid address')
+                        }
+                      }}
+                      disabled={!transferInput || transferOwnershipHook.isPending}
+                      className="w-full px-4 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors flex items-center justify-center gap-2"
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                      Review Transfer
+                    </button>
+                  ) : (
+                    <div className="space-y-3 p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                      <p className="text-sm font-semibold text-orange-900">Confirm Transfer</p>
+                      <p className="text-xs text-orange-800">
+                        You are about to transfer ownership to:
+                      </p>
+                      <p className="font-mono text-sm text-orange-900 break-all bg-white p-2 rounded border border-orange-300">
+                        {transferInput}
+                      </p>
+                      <div className="flex gap-2 pt-2">
+                        <button
+                          onClick={handleTransferOwnership}
+                          disabled={transferOwnershipHook.isPending || transferOwnershipHook.isConfirming}
+                          className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors text-sm"
+                        >
+                          {transferOwnershipHook.isPending || transferOwnershipHook.isConfirming ? 'Processing...' : 'Confirm Transfer'}
+                        </button>
+                        <button
+                          onClick={() => {
+                            setTransferConfirm(false)
+                            setTransferError('')
+                          }}
+                          disabled={transferOwnershipHook.isPending || transferOwnershipHook.isConfirming}
+                          className="flex-1 px-4 py-2 bg-gray-300 text-gray-900 rounded-lg hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors text-sm"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {transferOwnershipHook.hash && (
+                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <p className="text-sm text-blue-900 font-medium mb-1">Transfer Transaction Submitted</p>
+                      <p className="text-xs font-mono text-blue-700 break-all">{transferOwnershipHook.hash}</p>
+                    </div>
+                  )}
+
+                  {transferOwnershipHook.isSuccess && (
+                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600" />
+                      <div>
+                        <p className="text-sm text-green-900 font-medium">✓ Ownership transferred successfully!</p>
+                        <p className="text-xs text-green-700 mt-1">The contract is now owned by the new address.</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {transferOwnershipHook.error && (
+                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                      <p className="text-sm text-red-900 font-medium mb-1">Transaction Error</p>
+                      <p className="text-xs text-red-700">
+                        {transferOwnershipHook.error?.message}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           )}
         </main>
@@ -496,3 +652,4 @@ export function Dashboard() {
     </div>
   )
 }
+

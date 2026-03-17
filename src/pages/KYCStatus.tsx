@@ -2,6 +2,7 @@ import { useAccount } from 'wagmi'
 import { Shield, CheckCircle, AlertCircle, Mail } from 'lucide-react'
 import { useIsKYCed } from '../hooks/useKYC'
 import { KYC_REGISTRY_ADDRESS } from '../configs/contract'
+import { Spinner } from '../components/ui/spinner'
 
 export function KYCStatus() {
   const { address, isConnected } = useAccount()
@@ -43,7 +44,7 @@ export function KYCStatus() {
       <div className="glass-card p-8 mb-8">
         {isLoading ? (
           <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+            <Spinner className="size-12 mx-auto mb-4" />
             <p className="text-gray-600">Checking your KYC status...</p>
           </div>
         ) : (

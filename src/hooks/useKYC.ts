@@ -83,6 +83,31 @@ export function useRevokeKYC() {
   }
 }
 
+// Hook to transfer ownership (owner only)
+export function useTransferOwnership() {
+  const { writeContract, data: hash, isPending, error } = useWriteContract()
+  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
+    hash,
+  })
+
+  const transferOwnership = (newOwner: `0x${string}`) => {
+    writeContract({
+      ...kycRegistryConfig,
+      functionName: 'transferOwnership',
+      args: [newOwner],
+    })
+  }
+
+  return {
+    transferOwnership,
+    isPending,
+    isConfirming,
+    isSuccess,
+    error,
+    hash,
+  }
+}
+
 // Combined hook for KYC management with auto-refresh
 export function useKYCManagement(address?: `0x${string}`) {
   const [lastUpdate, setLastUpdate] = useState(0)

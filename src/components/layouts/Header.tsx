@@ -58,10 +58,18 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <div className="hidden sm:block">
-              <div className="transition-transform hover:scale-105">
-                <ConnectButton showBalance={false} accountStatus="address" chainStatus="none" />
-              </div>
+            <div className="hidden sm:block connect-wallet-wrapper">
+              <style>{`
+                .connect-wallet-wrapper button {
+                  background-color: #16a34a !important;
+                  color: white !important;
+                  border-color: #15803d !important;
+                }
+                .connect-wallet-wrapper button:hover {
+                  background-color: #15803d !important;
+                }
+              `}</style>
+              <ConnectButton showBalance={false} accountStatus="address" chainStatus="none" />
             </div>
 
             <button
